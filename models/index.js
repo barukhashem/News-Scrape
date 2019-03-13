@@ -1,4 +1,4 @@
-// Exporting an object containing all of our models
+// This exports an object containing all the models:
 
 module.exports = {
     Article: require("./Article"),
