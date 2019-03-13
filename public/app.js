@@ -1,9 +1,10 @@
 // This grabs the articles as a json:
-$.getJSON("/articles", function (data) {
+$.get("/scrape", function (data) {
+    console.log(data)
     // This loops through each item in the data array:
     for (var i = 0; i < data.length; i++) {
         // This appends the relevant information to the page:
-        $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+        $("#articles").append("<p data-id='" + data[i]._id + "'><a href='http://www.israelnationalnews.com" + data[i].link + "'>LINK</a> " + data[i].title + "<br /></p>");
     }
 });
 

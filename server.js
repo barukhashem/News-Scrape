@@ -35,14 +35,16 @@ mongoose.connect("mongodb://localhost/scrapedData", { useNewUrlParser: true });
 // Routes
 
 // This is a GET route for scraping the echoJS website:
-app.get("/", function (req, res) {
+app.get("/scrape", function (req, res) {
+    console.log("listening1");
     // This grabs the body of the html with axios:
     axios.get("http://www.israelnationalnews.com/").then(function (response) {
+        console.log("listening2");
         // This loads that into cheerio and saves it to $ for a shorthand selector:
         var $ = cheerio.load(response.data);
         var articles = [];
         // This grabs every h2 within an article tag:
-        $("a.TLink").each(function (i, element) {
+        $("a.HPTLink").each(function (i, element) {
 
             // This saves an empty result object:
             var result = {};
@@ -52,35 +54,33 @@ app.get("/", function (req, res) {
                 .children("h2")
                 .text();
             result.link = $(this)
-                .children("a")
                 .attr("href");
-
+            articles.push(result)
             // This creates a new Article using the `result` object built from scraping:
-            db.Article.create(result)
-                .then(function (dbArticle) {
 
-                    // This logs the added result in the console:
-                    console.log(dbArticle);
-
-                    // This pushes the added result into the articles array:
-                    articles.push(dbArticle);
-                })
-                .catch(function (err) {
-
-                    // If an error occurred, this logs it:
-                    console.log(err);
-                });
-        });
+        })
 
         // This sends a message to the client:
-        res.send(articles);
+        return articles;
+    }).then(function (resp2) {
+        db.Article.create(resp2)
+            .then(function (dbArticle) {
 
-    });
+                // This logs the added result in the console:
+                console.log(dbArticle);
+                res.json(dbArticle)
+            })
+            .catch(function (err) {
+
+                // If an error occurred, this logs it:
+                console.log(err);
+            });
+    })
 });
 
 // Route for getting all Articles from the db
 app.get("/articles", function (req, res) {
-
+    console.log("listening3");
     // This grabs every document in the Articles collection:
     db.Article.find({})
         .then(function (dbArticle) {
