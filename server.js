@@ -30,7 +30,10 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // This connects to the Mongo DB:
-mongoose.connect("mongodb://localhost/scrapedData", { useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/scrapedData", { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapedData";
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
 
