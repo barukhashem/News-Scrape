@@ -59,7 +59,7 @@ app.get("/scrape", function (req, res) {
                 .text();
             result.link = $(this)
                 .attr("href");
-            result.image = $(this).children("span.Img").children("img").attr("src") || "https://via.placeholder.com/187x113.png?text=Image+Not+Found";
+            result.image = $(this).children("span.Img").children("img").attr("src") || "https://via.placeholder.com/187x113.png?text=No+Image+Available";
             articles.push(result)
         })
 
