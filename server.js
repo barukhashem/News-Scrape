@@ -45,7 +45,8 @@ app.get("/scrape", function (req, res) {
         var articles = [];
         // This grabs every h2 within an article tag:
         $("a.HPTLink").each(function (i, element) {
-
+            console.log("IMAGE HERE")
+            console.log($(this).children("span.Img").children("img").attr("src"))
             // This saves an empty result object:
             var result = {};
 
@@ -55,9 +56,8 @@ app.get("/scrape", function (req, res) {
                 .text();
             result.link = $(this)
                 .attr("href");
+            result.image = $(this).children("span.Img").children("img").attr("src");
             articles.push(result)
-            // This creates a new Article using the `result` object built from scraping:
-
         })
 
         // This sends a message to the client:
@@ -67,7 +67,7 @@ app.get("/scrape", function (req, res) {
             .then(function (dbArticle) {
 
                 // This logs the added result in the console:
-                console.log(dbArticle);
+                // console.log(dbArticle);
                 res.json(dbArticle)
             })
             .catch(function (err) {

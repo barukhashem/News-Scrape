@@ -15,6 +15,9 @@ var ArticleSchema = new Schema({
         type: String,
         required: true
     },
+    image: {
+        type: String
+    },
     // Here, `note` is an object that stores a Note id:
     // The ref property links the ObjectId to the Note model (which allows populating the Article with an associated Note):
     note: {

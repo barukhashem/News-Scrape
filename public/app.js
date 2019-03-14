@@ -4,13 +4,20 @@ $.get("/scrape", function (data) {
     // This loops through each item in the data array:
     for (var i = 0; i < data.length; i++) {
         // This appends the relevant information to the page:
-        $("#articles").append("<p data-id='" + data[i]._id + "'><a href='http://www.israelnationalnews.com" + data[i].link + "'>LINK</a> " + data[i].title + "<br /></p>");
+
+        var imageURL = "defaultURL";
+
+        if(imageURL){
+            imageURL = data[i].image;
+        }
+
+        $("#articles").append("<p data-id='" + data[i]._id + "'><a href='http://www.israelnationalnews.com" + data[i].link + "'>LINK</a> " + data[i].title + "<img src='" + imageURL  + "'><br /></p><button class='notesButton' data-id='" + data[i]._id + "' >Notes</button>");
     }
 });
 
 
 // Whenever a p tag is clicked...
-$(document).on("click", "p", function () {
+$(document).on("click", ".notesButton", function () {
     // this empties the notes from the note section:
     $("#notes").empty();
     // This saves the id from the p tag:
@@ -25,7 +32,7 @@ $(document).on("click", "p", function () {
         .then(function (data) {
             console.log(data);
             // This appends the title of the article as an h2:
-            $("#notes").append("<h2>" + data.title + "</h2>");
+            $("#notes").append("<h3>" + data.title + "</h3>");
             // This appends an input id to enter a new title:
             $("#notes").append("<input id='titleinput' name='title' >");
             // This appends a text area to add a new note body:
