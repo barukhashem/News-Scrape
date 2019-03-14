@@ -5,13 +5,13 @@ $.get("/scrape", function (data) {
     for (var i = 0; i < data.length; i++) {
         // This appends the relevant information to the page:
 
-        var imageURL = "defaultURL";
+        var imageURL = "https://via.placeholder.com/187x113.png?text=Image+Not+Found";
 
-        if(imageURL){
+        if (imageURL) {
             imageURL = data[i].image;
         }
 
-        $("#articles").append("<p data-id='" + data[i]._id + "'><a href='http://www.israelnationalnews.com" + data[i].link + "'>LINK</a> " + data[i].title + "<img src='" + imageURL  + "'><br /></p><button class='notesButton' data-id='" + data[i]._id + "' >Notes</button>");
+        $("#articles").append("<p data-id='" + data[i]._id + "'><a href='http://www.israelnationalnews.com" + data[i].link + "'>LINK</a> " + data[i].title + "<img src='" + imageURL + "'><br /></p><button class='notesButton' data-id='" + data[i]._id + "' >Notes</button>");
     }
 });
 
